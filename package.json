@@ -1,10 +1,27 @@
 {
-	name: "HashTalk",
-	version: 0.0.1,
-	dependencies: {
+	"name": "HashTalk",
+	"version": "0.0.1",
+	"description": "A chat with HASHTAGS !",
+	"main": "web.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/leops/hashtalk.git"
+	},
+	"keywords": [
+		"hashtalk"
+	],
+	"author": "leops",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/leops/hashtalk/issues"
+	},
+	"dependencies": {
 		"express": "latest",
 		"firebase": "latest",
 		"firebase-token-generator": "latest",
 		"socket.io": "latest"
+	},
+	"engines": {
+		"node": "0.10.x"
 	}
 }
