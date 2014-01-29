@@ -1,0 +1,10 @@
+{
+	name: "HashTalk",
+	version: 0.0.1,
+	dependencies: {
+		"express": "latest",
+		"firebase": "latest",
+		"firebase-token-generator": "latest",
+		"socket.io": "latest"
+	}
+}

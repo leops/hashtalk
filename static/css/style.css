@@ -1,0 +1,38 @@
+.navbar-ht .navbar-brand {
+	width: 10px;
+	text-indent: -77px;
+	transition: all 1s;
+	box-sizing: content-box;
+	overflow: hidden;
+	padding: 0;
+	margin: 15px 15px;
+	color: #C0D5F5
+}
+.navbar-ht .navbar-brand:hover,
+.navbar-ht .navbar-brand:focus {
+	width: 77px;
+	text-indent: 0;
+	color: #e6fffd;
+	background-color: transparent
+}
+.navbar-ht .navbar-brand::after {
+	content: '#';
+}
+.navbar-ht {
+	background-color: #274257;
+	border-bottom: #2A75A9 3px solid;
+	border-radius: 0;
+}
+.navbar-ht .navbar-collapse,
+.navbar-ht .navbar-form {
+	border-color: #101010
+}
+.input-group {
+	width: 200px;
+}
+.navbar-ht .navbar-toggle {
+	border-color: #C0D5F5;
+}
+.navbar-ht .navbar-toggle .icon-bar {
+	background-color: #C0D5F5;
+}
