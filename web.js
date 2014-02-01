@@ -11,6 +11,7 @@ var express = require('express'),
 
 app.set('port', process.env.PORT || 5000);
 app.use(express.static(__dirname + '/static'));
+io.set("log level", 0);
 
 function postMessage(msg) {
 	var db = new Firebase(process.env.FIREBASE_URL);
