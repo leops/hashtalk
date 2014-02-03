@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<title>HashTalk</title>
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<!--<script data-main="js/main" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>-->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
@@ -41,33 +42,55 @@
 			</form>
 		</div>
 	</nav>
-	<div class="col-md-10 col-md-offset-1 well">
-		<p ng-cloak data-ng-repeat="message in messages | orderByPriority | filter:search:strict" data-ng-init="message.msg = format(message.msg)">
-			<a href="" data-pseudo="{{message.pseudo[0]}}">{{message.pseudo[0]}}</a>:
-			<span ng-bind-html="message.msg"></span>
-			<a data-ng-if="message.hashtag[0]" class="label label-primary" ng-click="search.hashtag = message.hashtag[0]" href="#">#{{message.hashtag[0]}}</a>
-		</p>
-	</div>
-	<div class="col-lg-2 well hidden">
-		<p>Pseudos</p>
-	</div>
-	<form name="postForm" class="col-md-10 col-md-offset-1 form-inline" role="form" data-ng-submit="submit()">
-		<div class="form-group" data-ng-class="{'has-error': !postForm.pseudo.$valid}">
-			<label class="sr-only" for="pseudo">Pseudo</label>
-			<input data-ng-change="setPseudo()" type="text" name="pseudo" class="form-control" id="pseudo" data-ng-model="pseudo" placeholder="Pseudo" required/>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 well">
+				<div ng-cloak data-ng-repeat="message in messages | orderByPriority | filter:msgFilter:false" data-ng-init="message = format(message)" class="media msg ">
+					<a class="pull-left" href="#">
+						<img class="media-object" gravatar-src="'{{message.pseudo[0]}}'" gravatar-size="32" gravatar-default="identicon">
+					</a>
+					<div class="media-body">
+						<small class="pull-right time">
+							<i class="fa fa-clock-o"></i>&nbsp;{{ message.time }}</small>
+						<h5 class="media-heading" data-pseudo="{{message.pseudo[0]}}">{{message.pseudo[0]}}</h5>
+						<small class="col-lg-10">
+							<span data-ng-if="message.type != 'file'" data-ng-bind-html="message.msg"></span>
+							<details data-ng-if="message.type == 'file'">
+								<summary class="btn btn-default">Fichier</summary>
+								<iframe data-ng-src="{{message.msg}}">
+								</iframe>
+							</details>
+							<a data-ng-if="message.hashtag[0]" class="label label-primary" ng-click="search.hashtag = message.hashtag[0]" href="#">#{{message.hashtag[0]}}</a>
+						</small>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="form-group" data-ng-class="{'has-error': !postForm.msg.$valid}">
-			<label class="sr-only" for="msg">Pseudo</label>
-			<input type="text" class="form-control" name="msg" id="msg" data-ng-model="msg" placeholder="Message" required/>
+		<div id="postBox" class="postBox row">
+			<form name="postForm" class="col-md-10 col-md-offset-1 form-inline" role="form" data-ng-submit="submit()">
+				<div class="form-group" data-ng-class="{'has-error': !postForm.pseudo.$valid}">
+					<label class="sr-only" for="pseudo">Pseudo</label>
+					<input data-ng-blur="setPseudo()" type="text" name="pseudo" class="form-control" id="pseudo" data-ng-model="pseudo" placeholder="Pseudo" required/>
+				</div>
+				<div class="form-group" data-ng-class="{'has-error': !postForm.msg.$valid}">
+					<label class="sr-only" for="msg">Pseudo</label>
+					<input type="text" class="form-control" name="msg" id="msg" data-ng-model="msg" placeholder="Message" required/>
+				</div>
+				<input type="submit" class="btn btn-success" value="Envoyer" />
+			</form>
 		</div>
-		<input type="submit" class="btn btn-primary" value="Envoyer" />
-	</form>
+	</div>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
+	<script src="/js/socket.io-stream.js"></script>
 	<script src="//cdn.firebase.com/v0/firebase.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-sanitize.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-route.js"></script>
 	<script src="//cdn.firebase.com/libs/angularfire/0.5.0/angularfire.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/lang/fr.js"></script>
+	<script src="/js/gravatar/md5.min.js"></script>
+	<script src="/js/gravatar/angular-gravatar.min.js"></script>
 	<script src="/js/app/app.js"></script>
 </body>
 

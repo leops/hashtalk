@@ -6,22 +6,30 @@
 	overflow: hidden;
 	padding: 0;
 	margin: 15px 15px;
-	color: #C0D5F5
+	color: #ffffff
 }
 .navbar-ht .navbar-brand:hover,
 .navbar-ht .navbar-brand:focus {
 	width: 77px;
 	text-indent: 0;
-	color: #e6fffd;
+	color: #ffffff;
 	background-color: transparent
 }
 .navbar-ht .navbar-brand::after {
 	content: '#';
 }
 .navbar-ht {
-	background-color: #274257;
-	border-bottom: #2A75A9 3px solid;
+	background-color: #2ECC71;
+	border-bottom: #27AE60 3px solid;
 	border-radius: 0;
+}
+.input-group-addon,
+.form-control {
+	border: 2px solid #27AE60;
+}
+.input-group-addon {
+	background-color: #27AE60;
+	color: #f4f6f6;
 }
 .navbar-ht .navbar-collapse,
 .navbar-ht .navbar-form {
@@ -31,8 +39,58 @@
 	width: 200px;
 }
 .navbar-ht .navbar-toggle {
-	border-color: #C0D5F5;
+	border-color: #ffffff;
 }
 .navbar-ht .navbar-toggle .icon-bar {
-	background-color: #C0D5F5;
+	background-color: #ffffff;
+}
+.time {
+	color: #bfbfbf;
+}
+iframe {
+	display: block;
+	max-width: 100%;
+	max-height: -webkit-fill-available;
+	max-height: -moz-available;
+	border: none;
+}
+.postBox {
+	position: sticky;
+	bottom: 10px;
+	border: 1px solid #eee;
+	padding: 10px;
+	background: #f8f8f8;
+}
+.postBox.drag::before {
+	content: '+ Drop a file here';
+}
+.postBox.drag form {
+	display: none;
+	visibility: hidden;
+}
+.btn-success {
+	color: #ffffff;
+	background-color: #2ecc71;
+	border-color: #2ecc71;
+}
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.active {
+	background-color: #58d68d;
+	border-color: #2ecc71;
+}
+.btn-default {
+	color: #ffffff;
+	background-color: #2ecc71;
+	border-color: #2ecc71;
+}
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+[open] .btn-default {
+	color: #ffffff;
+	background-color: #27AE60;
+	border-color: #2ecc71;
 }
