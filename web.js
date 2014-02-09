@@ -56,6 +56,10 @@ io.configure('production', function () {
 });
 
 function postMessage(msg) {
+	if(!msg.pseudo || !msg.msg || !msg.hashtag || !msg.time) {
+		console.error("Invalid message", msg);
+		return;
+	}
 	var db = new Firebase(process.env.FIREBASE_URL);
 	db.auth(token, function (error, result) {
 		if (error)
@@ -93,9 +97,8 @@ io.sockets.on('connection', function (socket) {
 			if (!pseudo || err) {
 				console.error(data, err);
 				return;
-			} else {
-				data.pseudo = [pseudo];
 			}
+			data.pseudo = [pseudo];
 
 			data.msg.replace(/\#(\S+)/g, function (match, hashtag) {
 				data.hashtag.push(hashtag);
@@ -133,7 +136,7 @@ io.sockets.on('connection', function (socket) {
 	});
 	socket.on('disconnect', function () {
 		socket.get('pseudo', function (err, pseudo) {
-			if (err) {
+			if (!pseudo || err) {
 				console.error(err);
 				return;
 			}
