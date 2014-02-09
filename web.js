@@ -134,7 +134,8 @@ io.sockets.on('connection', function (socket) {
 					msg.msg = 'viens de se connecter';
 				}
 				console.log(msg);
-				postMessage(msg);
+				if(!old || (old && old != data))
+					postMessage(msg);
 			});
 		});
 	});
