@@ -48,11 +48,11 @@ app.configure('production', function () {
 });
 
 io.configure('development', function () {
-	io.set("log level", 1);
+	//io.set("log level", 1);
 });
 
 io.configure('production', function () {
-	io.set("log level", 0);
+	//io.set("log level", 0);
 });
 
 function postMessage(msg) {
