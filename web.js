@@ -88,6 +88,10 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 	socket.on('message', function (data) {
+		if(!data) {
+			console.error("Empty message", data);
+			return;
+		}
 		if (data.hashtag)
 			data.hashtag = [data.hashtag];
 		else
