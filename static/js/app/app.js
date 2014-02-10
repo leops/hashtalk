@@ -1,9 +1,35 @@
 //define(["angular", "socketio", "firebase", "angularfire"], function (angular, io, Firebase) {
-angular.module('hashtalk', ['ngSanitize', 'ngRoute', 'firebase', 'ui.gravatar']).value('fbURL', 'https://hashtalk.firebaseio.com/messages').factory('Messages', function ($firebase, fbURL) {
+angular.module('hashtalk', ['ngSanitize', 'ngRoute', 'firebase', 'ui.gravatar']).value('fbURL', 'https://hashtalk.firebaseio.com/messages').factory('notification', function ($rootScope) {
+	var notification = {send: jQuery.noop};
+	if(external.getUnityObject) {
+		var Unity = external.getUnityObject(1.0)
+		Unity.init({name: "HashTalk", iconUrl: document.location.origin + "/img/flaticon.png"});
+		notification.send = function(notif) {
+			Unity.Notification.showNotification(notif.title, notif.content);
+		};
+	} else if ("Notification" in window) {
+		notification.send = function(notif) {
+			if (Notification.permission === "granted") {
+				var notif = new Notification("Hi there!");
+			}
+			else if (Notification.permission !== 'denied') {
+				Notification.requestPermission(function (permission) {
+					if(!('permission' in Notification)) {
+						Notification.permission = permission;
+					}
+					if (permission === "granted") {
+						var notif = new Notification(notif.title, {body: notif.content, img: "img/flaticon.png"});
+					}
+				});
+			}
+		};
+	}
+	return notification;
+}).factory('Messages', function ($rootScope, notification, $firebase, fbURL) {
 	return $firebase(new Firebase(fbURL));
 }).factory('socket', function ($rootScope) {
 	return io.connect();
-}).controller('HTCtrl', function ($scope, $route, $routeParams, $location, Messages, socket, $sce) {
+}).controller('HTCtrl', function ($scope, $route, $routeParams, $location, Messages, socket, $sce, notification) {
 	if (localStorage['pseudo']) {
 		$scope.pseudo = localStorage['pseudo'];
 		socket.emit('pseudo', $scope.pseudo);
@@ -46,6 +72,8 @@ angular.module('hashtalk', ['ngSanitize', 'ngRoute', 'firebase', 'ui.gravatar'])
 			else
 				msg.msg = $sce.trustAsHtml(msg.msg);
 		}
+		if(msg.pseudo.indexOf($scope.pseudo) > 0)
+			notification.send({title: "Mention", content: msg.pseudo[0] + " vous a mentionné."});
 		return msg;
 	};
 	$scope.msgFilter = function (value) {
