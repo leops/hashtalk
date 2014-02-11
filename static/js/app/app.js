@@ -57,23 +57,36 @@ angular.module('hashtalk', ['ngSanitize', 'ngRoute', 'firebase', 'ui.gravatar'])
 	};
 	$scope.format = function (msg) {
 		msg.time = moment(msg.time).lang('fr').fromNow();
-		if (typeof msg.msg === 'string') {
-			if (msg.type == 'message')
-				msg.msg = msg.msg.replace(/\#(\S+)/g, function (match, hashtag) {
-					return '<a class="label label-primary" onclick="angular.element(\'body\').scope().$apply(function($scope){$scope.search.hashtag = \'' + hashtag + '\';});" href="#">' + match + '</a>';
-				}).replace(/\@(\S+)/g, function (match, pseudo) {
-					return '<a class="label label-success" onclick="angular.element(\'body\').scope().$apply(function($scope){$scope.search.pseudo = \'' + pseudo + '\';});" href="#">' + match + '</a>';
-				});
-			else if (msg.type == 'event')
-				msg.msg = '<i>' + msg.msg + '</i>';
-
-			if (msg.type == 'file')
-				msg.msg = $sce.trustAsResourceUrl(msg.msg);
-			else
-				msg.msg = $sce.trustAsHtml(msg.msg);
+		if (msg.type == 'message') {
+			msg.msg = msg.msg.replace(/\#(\S+)/g, function (match, hashtag) {
+				return '<a class="label label-primary" onclick="angular.element(\'body\').scope().$apply(function($scope){$scope.search.hashtag = \'' + hashtag + '\';});" href="#">' + match + '</a>';
+			}).replace(/\@(\S+)/g, function (match, pseudo) {
+				return '<a class="label label-success" onclick="angular.element(\'body\').scope().$apply(function($scope){$scope.search.pseudo = \'' + pseudo + '\';});" href="#">' + match + '</a>';
+			});
+		} else if (msg.type == 'event') {
+			switch(msg.name) {
+				case "connect" :
+					msg.msg = "s'est connecté";
+					break;
+				case "changed" :
+					msg.msg = "à changé son pseudo en " + msg.new;
+					break;
+				case "disconnect" :
+					msg.msg = "s'est déconnecté";
+					break;
+				default: 
+					msg.msg = "Un evenement s'est produit."
+					break;
+			}
+			msg.msg = msg.msg.italics();
 		}
+		if (msg.type == 'file')
+			msg.msg = $sce.trustAsResourceUrl('data:' + msg.type + ';base64,' + msg.data);
+		else
+			msg.msg = $sce.trustAsHtml(msg.msg);
 		if(msg.pseudo.indexOf($scope.pseudo) > 0)
 			notification.send({title: "Mention", content: msg.pseudo[0] + " vous a mentionné."});
+		console.log(msg);
 		return msg;
 	};
 	$scope.msgFilter = function (value) {

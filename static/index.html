@@ -47,12 +47,12 @@
 			<div class="col-md-12 well">
 				<div ng-cloak data-ng-repeat="message in messages | orderByPriority | filter:msgFilter:false" data-ng-init="message = format(message)" class="media msg ">
 					<a class="pull-left" href="#">
-						<img class="media-object" gravatar-src="'{{message.pseudo[0]}}'" gravatar-size="32" gravatar-default="identicon">
+						<img class="media-object" gravatar-src="'{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}'" gravatar-size="32" gravatar-default="identicon">
 					</a>
 					<div class="media-body">
 						<small class="pull-right time">
 							<i class="fa fa-clock-o"></i>&nbsp;{{ message.time }}</small>
-						<h5 class="media-heading" data-pseudo="{{message.pseudo[0]}}">{{message.pseudo[0]}}</h5>
+						<h5 class="media-heading" data-pseudo="{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}">{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}</h5>
 						<small class="col-lg-10">
 							<span data-ng-if="message.type != 'file'" data-ng-bind-html="message.msg"></span>
 							<details data-ng-if="message.type == 'file'">
@@ -60,7 +60,7 @@
 								<iframe data-ng-src="{{message.msg}}">
 								</iframe>
 							</details>
-							<a data-ng-if="message.hashtag[0]" class="label label-primary" ng-click="search.hashtag = message.hashtag[0]" href="#">#{{message.hashtag[0]}}</a>
+							<a data-ng-if="message.hashtag && message.hashtag[0]" class="label label-primary" ng-click="search.hashtag = message.hashtag[0]" href="#">#{{message.hashtag[0]}}</a>
 						</small>
 					</div>
 				</div>

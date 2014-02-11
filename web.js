@@ -52,22 +52,23 @@ io.configure('development', function () {
 });
 
 io.configure('production', function () {
-	//io.set("log level", 0);
+	io.set("log level", 0);
 });
 
 function postMessage(msg) {
-	if(!msg.pseudo || !msg.msg || !msg.hashtag || !msg.time) {
+	if(msg.type && msg.pseudo && msg.time && ((msg.type == 'message' && msg.msg && msg.hashtag) || (msg.type == 'file' && msg.data && msg.type) || (msg.type == 'event' && msg.name))) {
+		var db = new Firebase(process.env.FIREBASE_URL);
+		db.auth(token, function (error, result) {
+			if (error)
+				return console.error("Login Failed!", error);
+
+			var newmsg = db.push();
+			newmsg.set(msg);
+		});
+	} else {
 		console.error("Invalid message", msg);
 		return;
 	}
-	var db = new Firebase(process.env.FIREBASE_URL);
-	db.auth(token, function (error, result) {
-		if (error)
-			return console.error("Login Failed!", error);
-
-		var newmsg = db.push();
-		newmsg.set(msg);
-	});
 }
 
 io.sockets.on('connection', function (socket) {
@@ -79,10 +80,10 @@ io.sockets.on('connection', function (socket) {
 			socket.get('pseudo', function (err, pseudo) {
 				postMessage({
 					type: 'file',
-					pseudo: [pseudo],
+					pseudo: pseudo,
 					time: new Date().getTime(),
-					hashtag: [''],
-					msg: 'data:' + data.type + ';base64,' + buffer
+					data: buffer,
+					type: data.type
 				});
 			});
 		});
@@ -119,19 +120,24 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 	socket.on('pseudo', function (data) {
+		var hashtag = [''];
+		if (data.hashtag)
+			hashtag = [data.hashtag];
+
 		socket.get('pseudo', function (err, old) {
 			socket.set('pseudo', data, function () {
 				msg = {
 					type: 'event',
 					time: new Date().getTime(),
-					hashtag: ['']
+					hashtag: hashtag
 				};
 				if (old) {
-					msg.pseudo = [old];
-					msg.msg = 'à changé de pseudo : ' + data;
+					msg.name = 'changed'
+					msg.pseudo = old;
+					msg.new = data;
 				} else {
-					msg.pseudo = [data];
-					msg.msg = 'viens de se connecter';
+					msg.pseudo = data;
+					msg.name = 'connect';
 				}
 				console.log(msg);
 				if(!old || (old && old != data))
@@ -147,10 +153,9 @@ io.sockets.on('connection', function (socket) {
 			}
 			msg = {
 				type: 'event',
-				pseudo: [pseudo],
+				pseudo: pseudo,
 				time: new Date().getTime(),
-				msg: 's\'est déconnecté ',
-				hashtag: ['']
+				name: 'disconnect'
 			};
 			console.log(msg);
 			postMessage(msg);
