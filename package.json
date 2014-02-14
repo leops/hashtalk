@@ -1,6 +1,6 @@
 {
   "name": "HashTalk",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "A chat with HASHTAGS !",
   "main": "web.js",
   "repository": {

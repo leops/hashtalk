@@ -3,6 +3,7 @@
   "description": "Chat with hashtags",
   "icons": {
     "60": "http://hashtalk.herokuapp.com/img/icon-60.png",
+    "90": "http://hashtalk.herokuapp.com/img/icon-90.png",
     "128": "http://hashtalk.herokuapp.com/img/icon-128.png",
     "256": "http://hashtalk.herokuapp.com/img/flaticon.png"
   },
