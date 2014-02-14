@@ -2,6 +2,7 @@
   "name": "HashTalk",
   "description": "Chat with hashtags",
   "icons": {
+    "32": "http://hashtalk.herokuapp.com/img/icon-32.png",
     "60": "http://hashtalk.herokuapp.com/img/icon-60.png",
     "90": "http://hashtalk.herokuapp.com/img/icon-90.png",
     "120": "http://hashtalk.herokuapp.com/img/icon-120.png",
