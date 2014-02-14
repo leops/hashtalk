@@ -26,7 +26,7 @@
 			<a class="navbar-brand" href="#">HashTalk</a>
 		</div>
 		<div class="collapse navbar-collapse">
-			<p data-ng-if="installable" class="navbar-text"><a data-ng-click="install()" href="#" class="navbar-link">Install</a></p>
+			<p data-ng-if="installable" class="navbar-text"><a data-ng-click="install()" href="#" class="navbar-link">Install</a>
 			<form class="navbar-form form-inline navbar-right" role="search">
 				<div class="form-group">
 					<div class="input-group">
