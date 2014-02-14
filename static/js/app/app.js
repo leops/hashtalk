@@ -1,7 +1,7 @@
 //define(["angular", "socketio", "firebase", "angularfire"], function (angular, io, Firebase) {
 angular.module('hashtalk', ['ngSanitize', 'ngRoute', 'firebase', 'ui.gravatar']).value('fbURL', 'https://hashtalk.firebaseio.com/messages').factory('notification', function ($rootScope) {
 	var notification = {send: jQuery.noop};
-	if(external.getUnityObject) {
+	if('external' in window && external.getUnityObject) {
 		var Unity = external.getUnityObject(1.0)
 		Unity.init({name: "HashTalk", iconUrl: document.location.origin + "/img/flaticon.png"});
 		notification.send = function(notif) {
