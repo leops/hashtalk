@@ -91,10 +91,12 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 	socket.on('message', function (data) {
-		if(!data) {
-			console.error("Empty message", data);
-			return;
-		}
+		if(!data)
+			return console.error("Empty message", data);
+
+		if(!data.msg || (data.msg && data.msg == ''))
+			return console.error("Empty message", data);
+
 		if (data.hashtag)
 			data.hashtag = [data.hashtag];
 		else
