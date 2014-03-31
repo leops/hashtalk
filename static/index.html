@@ -54,21 +54,21 @@
 			<div class="col-md-12 well">
 				<div data-ng-cloak data-ng-repeat="message in messages | orderByPriority | filter:msgFilter:false" data-ng-init="message = format(message)" class="media msg">
 					<span class="pull-left" data-ng-click="search.pseudo = ((message.type == 'message')?message.pseudo[0]:message.pseudo)">
-						<img class="media-object" src="//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y&s=32" alt="{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}" gravatar-src="'{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}'" gravatar-size="32" gravatar-default="identicon">
+						<img class="media-object" src="//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;f=y&amp;s=32" alt="{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}" data-gravatar-src="'{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}'" data-gravatar-size="32" data-gravatar-default="identicon">
 					</span>
 					<div class="media-body">
 						<small class="pull-right time">
 							<i class="fa fa-clock-o"></i>&nbsp;{{ message.time }}</small>
 						<h5 class="media-heading" data-pseudo="{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}">{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}</h5>
-						<small class="col-lg-10">
-							<span data-ng-if="message.type != 'file'" data-ng-bind-html="message.msg"></span>
+						<div class="col-lg-10">
+							<small data-ng-if="message.type != 'file'" data-ng-bind-html="message.msg"></small>
 							<details data-ng-if="message.type == 'file'">
 								<summary class="btn btn-default">File</summary>
 								<iframe data-ng-src="{{message.msg}}">
 								</iframe>
 							</details>
 							<a data-ng-if="message.hashtag && message.hashtag[0]" class="label label-primary" data-ng-click="search.hashtag = message.hashtag[0]" href="#">#{{message.hashtag[0]}}</a>
-						</small>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -76,8 +76,8 @@
 		<div id="postBox" class="postBox row">
 			<form name="postForm" class="col-md-10 col-md-offset-1 form-inline" role="form" data-ng-submit="submit()">
 				<div class="form-group" data-ng-class="{'has-error': !postForm.pseudo.$valid}">
-					<label class="sr-only" for="pseudo">Nickname</label>
-					<input data-ng-blur="setPseudo()" type="text" name="pseudo" class="form-control" id="pseudo" data-ng-model="pseudo" placeholder="Nickname" required/>
+					<label class="sr-only" for="nickname">Nickname</label>
+					<input data-ng-blur="setPseudo()" type="text" name="nickname" class="form-control" id="nickname" data-ng-model="pseudo" placeholder="Nickname" required/>
 				</div>
 				<div class="form-group" data-ng-class="{'has-error': !postForm.msg.$valid}">
 					<label class="sr-only" for="msg">Message</label>
