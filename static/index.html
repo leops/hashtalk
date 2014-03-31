@@ -54,7 +54,7 @@
 			<div class="col-md-12 well">
 				<div data-ng-cloak data-ng-repeat="message in messages | orderByPriority | filter:msgFilter:false" data-ng-init="message = format(message)" class="media msg">
 					<span class="pull-left" data-ng-click="search.pseudo = ((message.type == 'message')?message.pseudo[0]:message.pseudo)">
-						<img class="media-object" src="//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;f=y&amp;s=32" alt="{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}" data-gravatar-src="'{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}'" data-gravatar-size="32" data-gravatar-default="identicon">
+						<img class="media-object" src="//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;f=y&amp;s=32" alt="{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}" data-gravatar-src="'{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}'" data-gravatar-size="32" data-gravatar-default="identicon" height="32" width="32">
 					</span>
 					<div class="media-body">
 						<small class="pull-right time">
@@ -93,8 +93,8 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
 	<script src="js/socket.io-stream.js"></script>
 	<script src="//cdn.firebase.com/v0/firebase.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-sanitize.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-route.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-sanitize.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-route.min.js"></script>
 	<script src="//cdn.firebase.com/libs/angularfire/0.5.0/angularfire.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 	<script src="js/gravatar/md5.min.js"></script>
