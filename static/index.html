@@ -4,9 +4,9 @@
 <head>
 	<meta charset="utf-8">
 	<title itemprop="name">HashTalk</title>
-	<meta name="description" content="A chat with hashtags" />
-	<meta name="author" content="leops" />
-	<meta name="keywords" content="hashtalk, hashtags, chat" />
+	<meta name="description" itemprop="description" content="A chat with hashtags" />
+	<meta name="author" itemprop="author" content="leops" />
+	<meta name="keywords" itemprop="keywords" content="hashtalk, hashtags, chat" />
 	<link rel="canonical" href="http://hashtalk.herokuapp.com/" />
 	<meta name="google-site-verification" content="26rJwnaynO64j5Uxjxma4PPAur8w_PEcuAF2xnRD3rw" />
 	<meta name="msvalidate.01" content="AB0A6DC507709A3E54E5005532AC79EC" />
@@ -34,13 +34,13 @@
 				<a data-ng-click="install()" href="#" class="navbar-link" data-ng-cloak>Install</a>
 			</p>
 			<form class="navbar-form form-inline navbar-right" role="search">
-				<div class="form-group">
+				<div class="form-group" data-placement="bottom" title="Search for messages with a specific hashtag (the content of this field is attached to every message you send)">
 					<div class="input-group">
 						<span class="input-group-addon">#</span>
 						<input type="text" id="hashtag" class="form-control" data-ng-model="search.hashtag" placeholder="Hashtag">
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group" data-placement="bottom" title="Search for messages from a specific nickname">
 					<div class="input-group">
 						<span class="input-group-addon">@</span>
 						<input type="text" id="pseudo" class="form-control" data-ng-model="search.pseudo" placeholder="Nickname">

@@ -43,18 +43,23 @@ angular.module('hashtalk', ['ngSanitize', 'ngRoute', 'firebase', 'ui.gravatar'])
 		$scope.pseudo = localStorage['pseudo'];
 		socket.emit('pseudo', $scope.pseudo);
 	}
+
 	$scope.messages = Messages;
+
 	$scope.search = {
 		hashtag: '',
 		pseudo: ''
 	};
+
 	$scope.installable = false;
+
 	if ('mozApps' in navigator)
 		navigator.mozApps.checkInstalled(location.href + 'manifest.webapp').onsuccess = function () {
 			if (!this.result) {
 				$scope.installable = true;
 			};
 		};
+
 	$scope.install = function () {
 		var installLocFind = navigator.mozApps.install(location.href + 'manifest.webapp');
 		installLocFind.onsuccess = function (data) {
@@ -64,6 +69,7 @@ angular.module('hashtalk', ['ngSanitize', 'ngRoute', 'firebase', 'ui.gravatar'])
 			console.error(installLocFind.error);
 		};
 	};
+
 	$scope.submit = function () {
 		if ($scope.postForm.$valid) {
 			socket.emit('message', {
@@ -74,12 +80,14 @@ angular.module('hashtalk', ['ngSanitize', 'ngRoute', 'firebase', 'ui.gravatar'])
 		} else
 			console.error("Invalid", $scope.postForm.$valid);
 	};
+
 	$scope.setPseudo = function () {
 		if (localStorage['pseudo'] != $scope.pseudo) {
 			socket.emit('pseudo', $scope.pseudo);
 			localStorage['pseudo'] = $scope.pseudo;
 		}
 	};
+
 	$scope.format = function (msg) {
 		msg.time = moment(msg.time).lang('fr').fromNow();
 		if (msg.type == 'message') {
@@ -116,9 +124,11 @@ angular.module('hashtalk', ['ngSanitize', 'ngRoute', 'firebase', 'ui.gravatar'])
 			});
 		return msg;
 	};
+
 	$scope.msgFilter = function (value) {
 		return (value.pseudo == $scope.pseudo) || ((new RegExp('^.*' + $scope.search.hashtag + '.*$', 'gi').test(value.hashtag)) || ($scope.search.hashtag == '')) || ((new RegExp('^.*' + $scope.search.pseudo + '.*$', 'gi').test(value.pseudo)) || ($scope.search.pseudo == ''));
 	};
+
 	$(document.body).on('dragover', function (e) {
 		e.stopPropagation();
 		e.preventDefault();
@@ -135,4 +145,6 @@ angular.module('hashtalk', ['ngSanitize', 'ngRoute', 'firebase', 'ui.gravatar'])
 			ss.createBlobReadStream(f).pipe(stream);
 		}
 	});
+
+	$('[title]').tooltip();
 });
