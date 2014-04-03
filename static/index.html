@@ -1,9 +1,9 @@
 <!doctype html>
-<html data-ng-app="hashtalk" lang="en">
+<html data-ng-app="hashtalk" lang="en" itemscope itemtype="http://schema.org/WebPage">
 
 <head>
 	<meta charset="utf-8">
-	<title>HashTalk</title>
+	<title itemprop="name">HashTalk</title>
 	<meta name="description" content="A chat with hashtags" />
 	<meta name="author" content="leops" />
 	<meta name="keywords" content="hashtalk, hashtags, chat" />
@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/style.css">
-	<link href="img/favicon.png" rel="icon" type="image/png">
+	<link href="img/favicon.png" rel="icon" type="image/png" itemprop="image">
 	<link rel="apple-touch-icon" href="img/favicon.png">
 </head>
 
@@ -31,7 +31,7 @@
 		</div>
 		<div class="collapse navbar-collapse">
 			<p data-ng-if="installable" class="navbar-text">
-				<a data-ng-click="install()" href="#" class="navbar-link">Install</a>
+				<a data-ng-click="install()" href="#" class="navbar-link" data-ng-cloak>Install</a>
 			</p>
 			<form class="navbar-form form-inline navbar-right" role="search">
 				<div class="form-group">
@@ -51,7 +51,7 @@
 	</nav>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12 well">
+			<div class="col-md-12 well" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/WebPageElement">
 				<div data-ng-cloak data-ng-repeat="message in messages | orderByPriority | filter:msgFilter:false" data-ng-init="message = format(message)" class="media msg">
 					<span class="pull-left" data-ng-click="search.pseudo = ((message.type == 'message')?message.pseudo[0]:message.pseudo)">
 						<img class="media-object" src="//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;f=y&amp;s=32" alt="{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}" data-gravatar-src="'{{ (message.type == 'message')?message.pseudo[0]:message.pseudo }}'" data-gravatar-size="32" data-gravatar-default="identicon" height="32" width="32">

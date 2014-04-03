@@ -114,7 +114,6 @@ angular.module('hashtalk', ['ngSanitize', 'ngRoute', 'firebase', 'ui.gravatar'])
 				title: "Mention",
 				content: msg.pseudo[0] + " mentionned you."
 			});
-		console.log(msg);
 		return msg;
 	};
 	$scope.msgFilter = function (value) {
