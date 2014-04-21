@@ -18,6 +18,8 @@ app.configure(function () {
 	app.use(express.timeout());
 	app.use(express.favicon());
 	app.use(express.logger('tiny'));
+
+	app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN));
 	app.use(app.router);
 	app.use(express.static(__dirname + '/static'));
 });

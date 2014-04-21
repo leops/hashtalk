@@ -24,7 +24,8 @@
     "firebase-token-generator": "latest",
     "socket.io": "latest",
     "socket.io-stream": "~0.5.2",
-    "base64-stream": "~0.1.2"
+    "base64-stream": "~0.1.2",
+    "prerender-node": "^1.0.1"
   },
   "engines": {
     "node": "0.10.x"
