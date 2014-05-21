@@ -1,5 +1,6 @@
 var express = require('express'),
 	app = module.exports = express(),
+	router = express.Router(),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server),
 	ss = require('socket.io-stream'),
@@ -12,23 +13,19 @@ var express = require('express'),
 	base64 = require('base64-stream'),
 	fs = require('fs');
 
-app.configure(function () {
-	app.set('port', process.env.PORT || 5000);
-	app.use(express.compress());
-	app.use(express.timeout());
-	app.use(express.favicon());
-	app.use(express.logger('tiny'));
+app.set('port', process.env.PORT || 5000);
+app.use(require('compression')());
+//app.use(require('favicon')(__dirname + '/static/img/favicon.png'));
+app.use(require('morgan')('tiny'));
+app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN));
+app.use(router);
+app.use(require('serve-static')('static'));
 
-	app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN));
-	app.use(app.router);
-	app.use(express.static(__dirname + '/static'));
-});
+if (app.get('env') == 'development') {
+	app.use(require('errorhandler')());
+}
 
-app.configure('development', function () {
-	app.use(express.errorHandler());
-});
-
-app.configure('production', function () {
+if (app.get('env') == 'production') {
 	app.use(function (err, req, res, next) {
 		console.error(err);
 		next(err);
@@ -48,7 +45,7 @@ app.configure('production', function () {
 			error: err
 		});
 	});
-});
+}
 
 io.configure('development', function () {
 	//io.set("log level", 1);
@@ -59,7 +56,7 @@ io.configure('production', function () {
 });
 
 function postMessage(msg) {
-	if(msg.type && msg.pseudo && msg.time && ((msg.type == 'message' && msg.msg && msg.hashtag) || (msg.type == 'file' && msg.data && msg.type) || (msg.type == 'event' && msg.name))) {
+	if (msg.type && msg.pseudo && msg.time && ((msg.type == 'message' && msg.msg && msg.hashtag) || (msg.type == 'file' && msg.data && msg.type) || (msg.type == 'event' && msg.name))) {
 		var db = new Firebase(process.env.FIREBASE_URL);
 		db.auth(token, function (error, result) {
 			if (error)
@@ -93,10 +90,10 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 	socket.on('message', function (data) {
-		if(!data)
+		if (!data)
 			return console.error("Empty message", data);
 
-		if(!data.msg || (data.msg && data.msg == ''))
+		if (!data.msg || (data.msg && data.msg == ''))
 			return console.error("Empty message", data);
 
 		if (data.hashtag)
@@ -146,7 +143,7 @@ io.sockets.on('connection', function (socket) {
 					msg.name = 'connect';
 				}
 				console.log(msg);
-				if(!old || (old && old != data))
+				if (!old || (old && old != data))
 					postMessage(msg);
 			});
 		});
@@ -169,8 +166,8 @@ io.sockets.on('connection', function (socket) {
 	});
 });
 
-app.get('/manifest.webapp', function(req, res) {
-	fs.readFile(__dirname + '/manifest.webapp', function(err, data) {
+router.get('/manifest.webapp', function (req, res) {
+	fs.readFile(__dirname + '/manifest.webapp', function (err, data) {
 		if (err) throw err;
 		var manifest = JSON.parse(data);
 		manifest.version = require('./package.json').version;

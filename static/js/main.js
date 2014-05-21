@@ -38,7 +38,7 @@ angular.module('hashtalk', ['ngSanitize', 'ngRoute', 'firebase', 'ui.gravatar'])
 	return $firebase(new Firebase(fbURL));
 }).factory('socket', function ($rootScope) {
 	return io.connect('hashtalk.herokuapp.com');
-}).controller('HTCtrl', function ($scope, $route, $routeParams, $location, Messages, socket, $sce, notification) {
+}).controller('HTCtrl', function ($scope, $route, $routeParams, $location, Messages, socket, $sce, notification, $sanitize) {
 	if (localStorage['pseudo']) {
 		$scope.pseudo = localStorage['pseudo'];
 		socket.emit('pseudo', $scope.pseudo);
@@ -89,12 +89,12 @@ angular.module('hashtalk', ['ngSanitize', 'ngRoute', 'firebase', 'ui.gravatar'])
 	};
 
 	$scope.format = function (msg) {
-		msg.time = moment(msg.time).lang('fr').fromNow();
+		msg.time = moment(msg.time).lang(navigator.language).fromNow();
 		if (msg.type == 'message') {
-			msg.msg = msg.msg.replace(/\#(\S+)/g, function (match, hashtag) {
-				return '<a class="label label-primary" onclick="angular.element(\'body\').scope().$apply(function($scope){$scope.search.hashtag = \'' + hashtag + '\';});" href="#">' + match + '</a>';
+			msg.msg = $sanitize(msg.msg).replace(/\#(\S+)/g, function (match, hashtag) {
+				return '<a class="label label-primary" onclick="angular.element(\'body\').scope().$apply(function($scope){$scope.search.hashtag = \'' + hashtag + '\';});" href="#" rel="nofollow">' + match + '</a>';
 			}).replace(/\@(\S+)/g, function (match, pseudo) {
-				return '<a class="label label-success" onclick="angular.element(\'body\').scope().$apply(function($scope){$scope.search.pseudo = \'' + pseudo + '\';});" href="#">' + match + '</a>';
+				return '<a class="label label-success" onclick="angular.element(\'body\').scope().$apply(function($scope){$scope.search.pseudo = \'' + pseudo + '\';});" href="#" rel="nofollow">' + match + '</a>';
 			});
 		} else if (msg.type == 'event') {
 			switch (msg.name) {

@@ -28,11 +28,11 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">HashTalk</a>
+			<a class="navbar-brand" rel="nofollow" href="#">HashTalk</a>
 		</div>
 		<div class="collapse navbar-collapse">
 			<p data-ng-if="installable" class="navbar-text">
-				<a data-ng-click="install()" href="#" class="navbar-link" data-ng-cloak>Install</a>
+				<a data-ng-click="install()" href="#" rel="nofollow" class="navbar-link" data-ng-cloak>Install</a>
 			</p>
 			<form class="navbar-form form-inline navbar-right" role="search">
 				<div class="form-group" data-placement="bottom" title="Search for messages with a specific hashtag (the content of this field is attached to every message you send)">
@@ -68,7 +68,7 @@
 								<iframe data-ng-src="{{message.msg}}">
 								</iframe>
 							</details>
-							<a data-ng-if="message.hashtag && message.hashtag[0]" class="label label-primary" data-ng-click="search.hashtag = message.hashtag[0]" href="#">#{{message.hashtag[0]}}</a>
+							<a data-ng-if="message.hashtag && message.hashtag[0]" class="label label-primary" data-ng-click="search.hashtag = message.hashtag[0]" href="#" rel="nofollow">#{{message.hashtag[0]}}</a>
 						</div>
 					</div>
 				</div>
@@ -89,13 +89,13 @@
 		</div>
 	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.5/angular.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
 	<script src="js/socket.io-stream.js"></script>
 	<script src="//cdn.firebase.com/v0/firebase.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-sanitize.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-route.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.5/angular-sanitize.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.5/angular-route.min.js"></script>
 	<script src="//cdn.firebase.com/libs/angularfire/0.5.0/angularfire.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 	<script src="js/gravatar/md5.min.js"></script>

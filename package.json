@@ -1,37 +1,42 @@
 {
-  "name": "HashTalk",
-  "version": "0.2.6",
-  "description": "A chat with HASHTAGS !",
-  "main": "web.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/leops/hashtalk.git"
-  },
-  "keywords": [
+	"name": "HashTalk",
+	"version": "0.2.7",
+	"description": "A chat with HASHTAGS !",
+	"main": "web.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/leops/hashtalk.git"
+	},
+	"keywords": [
     "hashtalk"
   ],
-  "scripts": {
-    "start": "node web.js"
-  },
-  "author": "leops",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/leops/hashtalk/issues"
-  },
-  "dependencies": {
-    "express": "~3.4.8",
-    "firebase": "1.0.3",
-    "firebase-token-generator": "latest",
-    "socket.io": "latest",
-    "socket.io-stream": "~0.5.2",
-    "base64-stream": "~0.1.2",
-    "prerender-node": "^1.0.1"
-  },
-  "engines": {
-    "node": "0.10.x"
-  },
-  "devDependencies": {
-    "grunt": "^0.4.4",
-    "grunt-contrib-uglify": "^0.4.0"
-  }
+	"scripts": {
+		"start": "node web.js"
+	},
+	"author": "leops",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/leops/hashtalk/issues"
+	},
+	"dependencies": {
+		"express": "^4.0.0",
+		"socket.io-stream": "^0.5.3",
+		"prerender-node": "^1.0.1",
+		"socket.io": "^0.9.16",
+		"firebase": "^1.0.11",
+		"firebase-token-generator": "^0.1.4",
+		"base64-stream": "^0.1.2",
+		"compression": "^1.0.1",
+		"favicon": "0.0.2",
+		"morgan": "^1.0.0",
+		"serve-static": "^1.0.4"
+	},
+	"engines": {
+		"node": "0.10.x"
+	},
+	"devDependencies": {
+		"grunt": "^0.4.4",
+		"grunt-contrib-uglify": "^0.4.0",
+		"errorhandler": "^1.0.0"
+	}
 }
