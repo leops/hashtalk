@@ -1,0 +1,32 @@
+.popover,
+.popover:before {
+	left: initial !important;
+	right: 15px !important;
+}
+.input-row label {
+	width: 50px !important;
+}
+.input-row input {
+	width: calc(100% - 50px) !important;
+}
+.btn-block {
+	margin-bottom: inherit !important;
+	border-radius: inherit !important;
+}
+.platform-android #search .table-view {
+	padding-top: 0;
+}
+#search .table-view-cell {
+	padding: 11px 15px 11px 15px;
+}
+.icon-search {
+	margin-right: 10px;
+}
+.card h1 {
+	text-align: center;
+	color: #bbb;
+	margin-top: 10px;
+}
+.table-view-cell>.badge {
+	top: 35%;
+}
