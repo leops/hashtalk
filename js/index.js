@@ -43,23 +43,17 @@ var app = angular.module("HashTalk", ["firebase", "ngSanitize", "angularMoment"]
 			return result;
 		};
 	})
-	.controller('HtCtrl', ['$scope', '$firebase', '$log',
-		function ($scope, $firebase, $log) {
+	.controller('HtCtrl', ['$scope', '$firebase',
+		function ($scope, $firebase) {
 			var ref = new Firebase("https://hashtalk.firebaseio.com/next");
 			$scope.messages = $firebase(ref);
 
 			$scope.nickname = "";
 			$scope.message = "";
 			$scope.search = {
-				hashtag: "",
+				hashtag: window.location.hash,
 				author: ""
 			};
-
-			document.addEventListener("deviceready", function () {
-				$scope.$apply(function (scope) {
-					scope.platform = device.platform.toLowerCase().replace(' ', '-');
-				});
-			}, false);
 
 			$scope.platform = "pc";
 			$scope.stylesheets = {
@@ -101,9 +95,28 @@ var app = angular.module("HashTalk", ["firebase", "ngSanitize", "angularMoment"]
 					time: Date.now(),
 					hashtag: hashtags
 				});
-				$scope.message = '';
-			}
-				}])
+			};
+
+			$(document).on("deviceready", function () {
+				$scope.$apply(function (scope) {
+					scope.platform = device.platform.toLowerCase().replace(' ', '-');
+				});
+			});
+
+			$('[data-ng-model="search.hashtag"]').on('input', function () {
+				window.location.hash = $(this).val();
+			});
+
+			$(window).on("hashchange", function () {
+				$scope.$apply(function (scope) {
+					scope.search.hashtag = window.location.hash.substr(1);
+				});
+			});
+
+			$('a').click(function (e) {
+				e.preventDefault();
+			});
+	}])
 	.controller('SettingsCtrl', ['$scope', '$log',
 		function ($scope, $log) {
 			$scope.platform = ((typeof device !== 'undefined') ? device.platform : "pc");
