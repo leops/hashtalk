@@ -1,0 +1,10 @@
+{ 
+    "launch_path":"/index.html",
+    "installs_allowed_from":["*"],
+    "version":"0.0.1",
+    "name":"HashTalk",
+    "pkgName":"com.leops.hashtalk",
+    "icons": {
+        "128": "img/favicon.png"
+    }
+}

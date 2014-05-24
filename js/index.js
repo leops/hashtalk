@@ -1,4 +1,4 @@
-var app = angular.module("HashTalk", ["firebase", "ngSanitize"])
+var app = angular.module("HashTalk", ["firebase", "ngSanitize", "angularMoment"])
 	.directive('compile', function ($compile) {
 		return {
 			scope: true,
@@ -55,7 +55,21 @@ var app = angular.module("HashTalk", ["firebase", "ngSanitize"])
 				author: ""
 			};
 
-			$scope.platform = ((typeof device !== 'undefined') ? device.platform : "pc");
+			document.addEventListener("deviceready", function () {
+				$scope.$apply(function (scope) {
+					scope.platform = device.platform.toLowerCase().replace(' ', '-');
+				});
+			}, false);
+
+			$scope.platform = "pc";
+			$scope.stylesheets = {
+				'ios': 'http://cdn.jsdelivr.net/ratchet/2.0.1/css/ratchet-theme-ios.min.css',
+				'android': 'http://cdn.jsdelivr.net/ratchet/2.0.1/css/ratchet-theme-android.min.css',
+				'pc': '',
+				'firefox-os': 'css/firefox.css',
+				'windows-8': '',
+				'ubuntu': ''
+			};
 
 			$scope.similar = function (actual, expected) {
 				return actual.match(new RegExp('^.*' + expected + '.*$', 'i')) !== null;
@@ -76,13 +90,17 @@ var app = angular.module("HashTalk", ["firebase", "ngSanitize"])
 			};
 
 			$scope.postMessage = function () {
-				var message = {
+				var hashtags = [$scope.search.hashtag];
+				if ($scope.message.match(/#(\S+)/g) !== null)
+					$scope.message.match(/#(\S+)/g).forEach(function (h) {
+						hashtags.push(h.replace('#', ''));
+					});
+				$scope.messages.$add({
 					author: $scope.nickname,
 					content: $scope.message,
 					time: Date.now(),
-					hashtag: ($scope.message.match(/#(\S+)/g) === null) ? [$scope.search.hashtag] : [$scope.search.hashtag].concat($scope.message.match(/#(\S+)/g))
-				};
-				$scope.messages.$add(message);
+					hashtag: hashtags
+				});
 				$scope.message = '';
 			}
 				}])

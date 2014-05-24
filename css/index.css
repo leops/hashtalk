@@ -1,13 +1,20 @@
+.platform-android .hidden-android {
+	display: none;
+	visibility: hidden;
+}
 .popover,
 .popover:before {
 	left: initial !important;
-	right: 15px !important;
+	right: 9px !important;
 }
 .input-row label {
 	width: 50px !important;
 }
 .input-row input {
 	width: calc(100% - 50px) !important;
+}
+input[type=search]::-webkit-search-cancel-button {
+	-webkit-appearance: searchfield-cancel-button;
 }
 .btn-block {
 	margin-bottom: inherit !important;
@@ -19,6 +26,10 @@
 #search .table-view-cell {
 	padding: 11px 15px 11px 15px;
 }
+.icon,
+header:not(.hidden-android) h1.title {
+	color: #fff;
+}
 .icon-search {
 	margin-right: 10px;
 }
@@ -29,4 +40,15 @@
 }
 .table-view-cell>.badge {
 	top: 35%;
+}
+header.bar:not(.hidden-android),
+.btn-positive,
+.badge-positive {
+	background: #5cb85c;
+}
+.badge-primary {
+	background-color: #4a808f;
+}
+a {
+	color: #4a808f;
 }
