@@ -33,7 +33,7 @@ header:not(.hidden-android) h1.title {
 .icon-search {
 	margin-right: 10px;
 }
-.card h1 {
+h2 {
 	text-align: center;
 	color: #bbb;
 	margin-top: 10px;
