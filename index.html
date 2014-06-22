@@ -45,7 +45,7 @@
 		<div class="card">
 			<ul class="table-view" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/WebPageElement">
 				<li class="table-view-cell media" data-ng-repeat="msg in filteredMessages = (messages | orderByPriority | filter:msgFilter)">
-					<img class="media-object pull-left" data-gravatar="{{msg.author}}" />
+					<img class="media-object pull-left" data-gravatar="{{msg.author}}" height="42" width="42"/>
 					<div class="media-body">
 						<a href="#" data-ng-click="search.author = msg.author">{{msg.author}}</a>
 						<p data-compile data-template="{{msg.content | linky:'_blank' | extractSymbol}}"></p>
