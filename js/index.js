@@ -74,13 +74,20 @@ var app = angular.module("HashTalk", ["firebase", "ngSanitize", "angularMoment"]
 					hashMatch = false,
 					authMatch = ($scope.search.author !== '' && $scope.similar(item.author, $scope.search.author));
 
-				if ($scope.search.hashtag !== '')
-					item.hashtag.forEach(function (hash) {
+				if ($scope.search.hashtag !== '') {
+					var iHash = item.hashtag,
+						hashtags = item.content.match(/#(\S+)/g);
+					if(hashtags !== null)
+						iHash = iHash.concat(hashtags)
+						iHash.forEach(function (hash) { // item.hashtag
 						if ($scope.similar(hash, $scope.search.hashtag))
 							hashMatch = true;
 					});
+				}
 
-				return noSearch || (hashMatch || authMatch);
+				var isShown = noSearch || (hashMatch || authMatch);
+				//console.log(item, isShown);
+				return isShown;
 			};
 
 			$scope.postMessage = function () {
@@ -95,6 +102,7 @@ var app = angular.module("HashTalk", ["firebase", "ngSanitize", "angularMoment"]
 					time: Date.now(),
 					hashtag: hashtags
 				});
+				$scope.message = "";
 			};
 
 			$(document).on("deviceready", function () {
