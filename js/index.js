@@ -22,12 +22,12 @@ var app = angular.module("HashTalk", ["firebase", "ngSanitize", "angularMoment"]
 			return {
 				link: function (scope, elm, attrs) {
 					if (angular.isDefined(attrs.gravatar)) {
-						$http.jsonp('http://en.gravatar.com/' + attrs.gravatar + '.json?callback=JSON_CALLBACK')
+						$http.jsonp('http://en.gravatar.com/' + encodeURIComponent(attrs.gravatar) + '.json?callback=JSON_CALLBACK')
 							.success(function (data, status, headers, config) {
-								elm[0].src = data.entry[0].thumbnailUrl + '?d=identicon&s=42';
+								elm[0].src = data.entry[0].thumbnailUrl + '?s=42';
 							})
 							.error(function (data, status, headers, config) {
-								elm[0].src = 'http://www.gravatar.com/avatar/' + attrs.gravatar + '?d=identicon&s=42';
+								elm[0].src = 'http://www.gravatar.com/avatar/' + encodeURIComponent(attrs.gravatar) + '?d=identicon&s=42';
 							});
 					}
 				}
@@ -41,6 +41,11 @@ var app = angular.module("HashTalk", ["firebase", "ngSanitize", "angularMoment"]
 				return '<a class="badge badge-positive" href="#" ng-click="search.author = \'' + nickname + '\'">' + match + '</a>';
 			});
 			return result;
+		};
+	})
+	.filter('reverse', function() {
+		return function(items) {
+			return items.slice().reverse();
 		};
 	})
 	.controller('HtCtrl', ['$scope', '$firebase',
@@ -79,14 +84,13 @@ var app = angular.module("HashTalk", ["firebase", "ngSanitize", "angularMoment"]
 						hashtags = item.content.match(/#(\S+)/g);
 					if(hashtags !== null)
 						iHash = iHash.concat(hashtags)
-						iHash.forEach(function (hash) { // item.hashtag
+						iHash.forEach(function (hash) {
 						if ($scope.similar(hash, $scope.search.hashtag))
 							hashMatch = true;
 					});
 				}
 
 				var isShown = noSearch || (hashMatch || authMatch);
-				//console.log(item, isShown);
 				return isShown;
 			};
 
